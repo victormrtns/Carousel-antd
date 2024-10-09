@@ -8,17 +8,6 @@ export const Container = styled.div`
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-  .custom-dots li button {
-    background-color: #ddd;
-    border-radius: 50%;
-    width: 8px;
-    height: 8px;
-  }
-
-  .custom-dots li.slick-active button {
-    background-color: #6c5ce7;
-  }
 `;
 
 export const Slide = styled.div`
@@ -48,9 +37,7 @@ export const ContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
-  transition: height 0.3s ease-in-out; /* Suaviza a transição da altura */
-
-  /* Altura dinâmica com base no número de botões */
+  transition: height 0.3s ease-in-out;
   height: auto;
 `;
 
@@ -115,4 +102,31 @@ export const NavButton = styled.button`
   svg {
     font-size: 20px;
   }
+`;
+
+/* Novo estilo para os dots */
+export const DotsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+`;
+
+export const Dot = styled.div<{ isActive: boolean }>`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 5px;
+  background-color: ${(props) => (props.isActive ? '#6c5ce7' : '#ddd')};
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+
+  &:hover {
+    background-color: #5a49d1;
+  }
+
+  ${(props) =>
+    props.isActive &&
+    `
+      transform: scale(1.2);
+    `}
 `;

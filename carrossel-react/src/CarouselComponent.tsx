@@ -1,8 +1,6 @@
-import React, { useRef } from 'react';
-import { Carousel } from 'antd';
-import * as S from './CarouselComponent.styles';
+import React, { useState } from 'react';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import ButtonList from './ButtonList';
+import * as S from './CarouselComponent.styles';
 
 interface CarouselComponentProps {
   slides: {
@@ -14,15 +12,18 @@ interface CarouselComponentProps {
 }
 
 const CarouselComponent: React.FC<CarouselComponentProps> = ({ slides }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const carouselRef = useRef<any>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const prevSlide = () => {
-    carouselRef.current.prev();
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
 
   const nextSlide = () => {
-    carouselRef.current.next();
+    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
   };
 
   return (
@@ -30,25 +31,34 @@ const CarouselComponent: React.FC<CarouselComponentProps> = ({ slides }) => {
       <S.NavButton className="prev" onClick={prevSlide}>
         <LeftOutlined />
       </S.NavButton>
-      <Carousel ref={carouselRef} dots={{ className: 'custom-dots' }} adaptiveHeight>
-        {slides.map((slide, index) => (
-          <S.Slide key={index}>
-            <S.ImageWrapper>
-              <img src={slide.image} alt={slide.title} />
-            </S.ImageWrapper>
-            <S.ContentWrapper>
-              <S.Title>{slide.title}</S.Title>
-              <S.Description>{slide.description}</S.Description>
-              {slide.buttons.map((buttonText, i) => (
-                <S.Button key={i}>{buttonText}</S.Button>
-              ))}
-            </S.ContentWrapper>
-          </S.Slide>
-        ))}
-      </Carousel>
+
+      <S.Slide>
+        <S.ImageWrapper>
+          <img src={slides[currentSlide].image} alt={slides[currentSlide].title} />
+        </S.ImageWrapper>
+        <S.ContentWrapper>
+          <S.Title>{slides[currentSlide].title}</S.Title>
+          <S.Description>{slides[currentSlide].description}</S.Description>
+          {slides[currentSlide].buttons.map((buttonText, i) => (
+            <S.Button key={i}>{buttonText}</S.Button>
+          ))}
+        </S.ContentWrapper>
+      </S.Slide>
+
       <S.NavButton className="next" onClick={nextSlide}>
         <RightOutlined />
       </S.NavButton>
+
+      {/* Indicadores de Dots */}
+      <S.DotsContainer>
+        {slides.map((_, index) => (
+          <S.Dot
+            key={index}
+            isActive={index === currentSlide}
+            onClick={() => goToSlide(index)}
+          />
+        ))}
+      </S.DotsContainer>
     </S.Container>
   );
 };
