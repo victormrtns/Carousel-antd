@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   position: relative;
   width: 100%;
-  max-width: 900px;
+  max-width: 500px;
   margin: 0 auto;
   background-color: #fff;
   border-radius: 10px;
