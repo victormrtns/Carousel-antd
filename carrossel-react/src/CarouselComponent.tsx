@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import * as S from './CarouselComponent.styles';
+import LeftIcon from './LeftIcon';
+import RightIcon from './RightIcon';
 
 interface CarouselComponentProps {
   slides: {
@@ -29,7 +30,7 @@ const CarouselComponent: React.FC<CarouselComponentProps> = ({ slides }) => {
   return (
     <S.Container>
       <S.NavButton className="prev" onClick={prevSlide}>
-        <LeftOutlined />
+        <LeftIcon/>
       </S.NavButton>
 
       <S.Slide>
@@ -46,7 +47,7 @@ const CarouselComponent: React.FC<CarouselComponentProps> = ({ slides }) => {
       </S.Slide>
 
       <S.NavButton className="next" onClick={nextSlide}>
-        <RightOutlined />
+        <RightIcon />
       </S.NavButton>
 
       {/* Indicadores de Dots */}
